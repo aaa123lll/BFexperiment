@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script>
+    <style>
+              table {
+            width: 100%;
+            /* border-collapse: collapse; */
+            table-layout: fixed; /* 固定表格布局 */
+        }
+        td {
+            /* border: 1px solid black; */
+            width: 50%; /* 设置单元格宽度为50%，可以根据需要调整 */
+            /* text-align: center; */
+        }
+    </style>
+
+    <title>天线阵列波束形成实验</title>
+</head>
+<body>
+    <h1>天线阵列波束形成实验</h1>
+    <p>目的：使多元阵构成的基阵经过适当处理得到在预定方向上的指向性。<br>
+        意义：对于一个发射系统，具有指向性意味着发射能量可集中在某一方向，这样可以用较小的发射功率他侧更远距离的目标；对于一个接收系统，可以使系统定向接收，从而抑制其他方向的信号个干扰，准确测定目标方位。
+        <br>方法：对各个阵元进行处理（加权、延时、求和等）形成空间指向性。
+</p>
+
+
+
+<table>
+    <thead>
+      <!-- <tr>
+        <th>代码区域</th>
+        <th>运行区域</th>
+      </tr> -->
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="2" align="center"><p style="font-size: 20px; font-weight: bold;">实验1：ULA天线选择</p></td>
+      </tr>
+      <tr>
+        <td>
+          <p style="font-size: 16px; font-weight: bold;">参数选择</p>
+            <p>请输入天线数量</p>
+            <input type="number" id="elenumberULA"  placeholder="输入天线数量" value="8"><br><br>
+            <p>请输入服务用户角度（单位：°）</p>
+            <input type="number" id="ULAusr"  placeholder="输入用户角度" value="30"><br>
+            <p style="font-size: 16px; font-weight: bold;">实验说明</p>
+            <p>1. 输入天线数量和服务用户角度，将实验代码输入在下列代码框中，点击运行实验按钮，实验结果将显示在右侧输出框中。</p>
+            <p>2. 实验要求完成函数Modified_element(num_N, w, maxdre)的编写，其中，num_N为天线数量，w为天线选择矩阵，maxdre为服务用户角度。实验返回w优化矩阵。</p>
+            
+            <p style="font-size: 16px; font-weight: bold;">本实验主要框架如下：</p>
+            <textarea  id="codeULAshow" cols="100" rows="39" disabled></textarea><br>
+            
+
+
+        </td>
+        <td>
+          <p style="font-size: 16px; font-weight: bold;">请在以下代码编辑器中完成函数Modified_element(num_N, w, maxdre)的编写</p>
+          <textarea class="code_editor" name="code" id="codeULA" cols="100" rows="13"></textarea><br>
+          <!-- <div id="code1"></div><br> -->
+          <button onclick="runCodeULA()" id="runcodeULAbtn">运行实验</button>
+          <button onclick="runCodeULAsample()" id="runcodeULAsamplebtn">运行示例代码</button><br>
+          <p style="font-size: 16px; font-weight: bold;">输出与图形显示</p>
+          <textarea class="code_editor" name="output" id="outputULA" cols="100" rows="2"></textarea><br>
+            <div id="plot-containerULA"></div>
+            <iframe id="plot-containerframeULA" width="90%" height="500"></iframe>
+        
+        </td>
+
+      </tr>
+      <tr>
+        <td colspan="2" align="center"><p style="font-size: 20px; font-weight: bold;">实验2：UPA天线选择</p></td>
+      </tr>
+      <tr>
+        <td>
+          <p style="font-size: 16px; font-weight: bold;">参数选择</p>
+          <p>请输入x轴天线数量</p>
+        <input type="number" id="elenumberUPAx"  placeholder="输入天线数量" value="4"><br>
+        <p>请输入y轴天线数量</p>
+        <input type="number" id="elenumberUPAy"  placeholder="输入天线数量" value="4"><br>
+        <p>请输入用户俯仰角（单位：°）</p>
+        <input type="number" id="UPAtheta"  placeholder="输入用户角度" value="60"><br>
+        <p>请输入用户方位角（单位：°）</p>
+        <input type="number" id="UPAphi"  placeholder="输入用户角度" value="30"><br>
+        <p style="font-size: 16px; font-weight: bold;">实验说明</p>
+            <p>1. 输入天线数量和服务用户角度，将实验代码输入在下列代码框中，点击运行实验按钮，实验结果将显示在右侧输出框中。</p>
+            <p>2. 实验要求完成函数opt(Nx,Ny,w,theta,phi)的编写，其中，Nx为x轴天线数量，Ny为y轴天线数量，w为天线选择矩阵，theta为用户俯仰角，phi为用户方位角。实验返回w优化矩阵。</p>
+            <p style="font-size: 16px; font-weight: bold;">本实验主要框架如下：</p>
+            <textarea  id="codeUPAshow" cols="100" rows="39" disabled></textarea><br>
+      </td>
+      <td>
+        <p style="font-size: 16px; font-weight: bold;">请在以下代码编辑器中完成函数opt(Nx,Ny,w,theta,phi)的编写</p>
+        <textarea class="code_editor" name="code" id="codeUPA" cols="100" rows="16"></textarea><br>
+        <button onclick="runCodeUPA()" id="runcodeUPAbtn">运行实验</button>
+        <button onclick="runCodeUPAsample()" id="runcodeUPAsamplebtn">运行示例代码</button><br>
+        <p style="font-size: 16px; font-weight: bold;">输出与图形显示</p>
+        <textarea class="code_editor" name="output" id="outputUPA" cols="100" rows="2"></textarea><br>
+        <div id="plot-containerUPA"></div>
+        <iframe id="plot-containerframeUPA" width="90%" height="500"></iframe>
+    </td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center"><p style="font-size: 20px; font-weight: bold;">实验3：ULA多用户波束赋形</p></td>
+      </tr>
+      <tr>
+        <td>
+          <p style="font-size: 16px; font-weight: bold;">参数选择</p>
+          <p>请输入天线数量</p>
+        <input type="number" id="elenumberULAmult"  placeholder="输入天线数量" value="4"><br>
+        <p>请输入服务用户角度（单位：°）</p>
+        <input type="number" id="ULAmultusr"  placeholder="输入用户角度" value="10"><br>
+        <p>请输入干扰用户1角度（单位：°）</p>
+        <input type="number" id="disturb1dre"  placeholder="输入干扰用户角度" value="50"><br>
+        <p>请输入干扰用户1角度（单位：°）</p>
+        <input type="number" id="disturb2dre"  placeholder="输入干扰用户角度" value="-60"><br>
+        <p  style="font-size: 16px; font-weight: bold;">实验说明</p>
+            <p>1. 输入天线数量和服务用户角度，将实验代码输入在下列代码框中，点击运行实验按钮，实验结果将显示在右侧输出框中。</p>
+            <p>2. 实验要求完成函数optimizedfuc(M,theta_0,theta_1,theta_2)的编写，其中，M为天线数量，theta_0为服务用户角度，theta_1为干扰用户1角度，theta_2为干扰用户2角度。实验返回最优相控阵列权重向量。</p>
+            <p style="font-size: 16px; font-weight: bold;">本实验主要框架如下：</p>
+            <textarea  id="codeULAmultshow" cols="100" rows="39" disabled></textarea><br>
+      </td>
+      <td>
+        <p style="font-size: 16px; font-weight: bold;">请在以下代码编辑器中完成函数optimizedfuc(M,theta_0,theta_1,theta_2)的编写</p>
+        <textarea class="code_editor" name="code" id="codeULAmult" cols="100" rows="20"></textarea><br>
+        <button onclick="runCodeULAmult()" id="runcodeULAmultbtn">运行实验</button>
+        <button onclick="runCodeULAmultsample()" id="runcodeULAmultsamplebtn">运行示例代码</button><br>
+        <p style="font-size: 16px; font-weight: bold;">输出与图形显示</p>
+        <textarea class="code_editor" name="output" id="outputULAmult" cols="100" rows="2"></textarea><br>
+        <div id="plot-container"></div>
+        <iframe id="plot-containerframeULAmult" width="90%" height="500"></iframe>
+    </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+<link rel="stylesheet" href="styles.css">
+<script src="main.js"></script>
+</body>
+</html>
